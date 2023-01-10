@@ -5,10 +5,10 @@ class Alpenbar:
     space = " "
     block = u'\u2588'
 
-    def __init__(self, bar_name: str, bar_size: int, total_count: int, enable_time: bool):
-        self.bar_name = bar_name
-        self.bar_size = bar_size
+    def __init__(self, total_count: int, bar_name: str = "alpen progress", bar_size: int = 50, enable_time: bool = True):
         self.total_count = total_count
+        self.bar_size = bar_size
+        self.bar_name = bar_name
         self.enable_time = enable_time
         if self.enable_time:
             self.time_zero = time.perf_counter()
@@ -25,4 +25,3 @@ class Alpenbar:
         else:
             print(f'\r{self.bar_name} |{Alpenbar.block * n_blocks}{Alpenbar.space * (self.bar_size - n_blocks)}| '
                   f'{current_count}/{self.total_count}', end='')
-
