@@ -1,11 +1,17 @@
 import time
 
 
+def format_time(seconds):
+    m, s = divmod(seconds, 60)
+    h, m = divmod(m, 60)
+    return f"{h:.0f}h{m:.0f}m{s:.0f}s"
+
+
 class Alpenbar:
     space = " "
     block = u'\u2588'
 
-    def __init__(self, total_count: int, bar_name: str = "alpen progress", bar_size: int = 50, enable_time: bool = True):
+    def __init__(self, total_count: int, bar_name: str = "Alpen progress", bar_size: int = 50, enable_time: bool = True):
         self.total_count = total_count
         self.bar_size = bar_size
         self.bar_name = bar_name
@@ -13,15 +19,23 @@ class Alpenbar:
         if self.enable_time:
             self.time_zero = time.perf_counter()
 
-    def tick(self, current_count: int):
+        self.current_count = 0
+        self.tick()
+
+    def tick(self, current_count=None):
+        if current_count is None:
+            current_count = self.current_count
+
         n_blocks = int(current_count / self.total_count * self.bar_size)
         if self.enable_time and current_count != 0:
-            time_remaining = (time.perf_counter() - self.time_zero) / current_count * (self.total_count - current_count)
-            m, s = divmod(time_remaining, 60)
-            h, m = divmod(m, 60)
+            time_elapsed = time.perf_counter() - self.time_zero
+            average_iteration_time = time_elapsed / current_count
+            time_remaining = average_iteration_time * (self.total_count - current_count)
             print(f'\r{self.bar_name} |{Alpenbar.block * n_blocks}{Alpenbar.space * (self.bar_size - n_blocks)}| '
                   f'{current_count}/{self.total_count}    '
-                  f'Estimated Time Remaining: {h:.0f}h{m:.0f}m{s:.0f}s', end='')
+                  f'ETA: {format_time(time_remaining)}    ' 
+                  f'Iteration Rate: {1 / average_iteration_time:.0f}    ',
+                  f'Time Elapsed: {format_time(time_elapsed)}', end='')
         else:
             print(f'\r{self.bar_name} |{Alpenbar.block * n_blocks}{Alpenbar.space * (self.bar_size - n_blocks)}| '
                   f'{current_count}/{self.total_count}', end='')
