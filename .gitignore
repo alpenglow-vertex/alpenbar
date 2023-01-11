@@ -1,0 +1,15 @@
+# created by virtualenv automatically
+../venv
+/venv/
+/.idea/.gitignore
+/.idea/alpenbar.iml
+/dist/alpenbar-1.1.0.tar.gz
+/dist/alpenbar-1.1.0-py3-none-any.whl
+/alpenbar.egg-info/dependency_links.txt
+/.idea/misc.xml
+/.idea/modules.xml
+/alpenbar.egg-info/PKG-INFO
+/.idea/inspectionProfiles/profiles_settings.xml
+/alpenbar.egg-info/SOURCES.txt
+/alpenbar.egg-info/top_level.txt
+/.idea/vcs.xml
