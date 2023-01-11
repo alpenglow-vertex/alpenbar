@@ -1,0 +1,36 @@
+[build-system]
+requires = [
+    "setuptools>=65.3.0",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "alpenbar"
+version = "1.0.0"
+description = "Alpenglow annotations datamodel"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Internationalization",
+    "License :: Other/Proprietary License",
+    "Development Status :: 3 - Alpha",
+]
+dependencies = []
+authors = [
+    { name = "Tim Krasnoperov", email = "alpenglow.dev.main@gmail.com" },
+    { name = "August O'Beirne", email = "alpenglow.dev.main@gmail.com" },
+]
+
+[project.license]
+file = "LICENSE"
+
+[project.urls]
+Homepage = "https://github.com/alpenglow-vertex/alpenbar"
+Bugtracker = "https://github.com/alpenglow-vertex/alpenbar/issues"
+
+[tool.setuptools]
+packages = [
+    "alpenbar",
+]

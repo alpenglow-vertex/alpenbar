@@ -1,0 +1,1 @@
+It has type hints, use them. Good code should never need a readme.
