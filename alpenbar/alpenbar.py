@@ -11,11 +11,12 @@ class Alpenbar:
     space = " "
     block = u'\u2588'
 
-    def __init__(self, total_count: int, bar_name: str = "Alpen progress", bar_size: int = 50, enable_time: bool = True):
+    def __init__(self, total_count: int, bar_name: str = "Alpen progress", bar_size: int = 50, enable_time: bool = True, tk_mode: bool = False):
         self.total_count = total_count
         self.bar_size = bar_size
         self.bar_name = bar_name
         self.enable_time = enable_time
+        self.tk_mode = tk_mode
         if self.enable_time:
             self.time_zero = time.perf_counter()
 
@@ -31,11 +32,17 @@ class Alpenbar:
             time_elapsed = time.perf_counter() - self.time_zero
             average_iteration_time = time_elapsed / current_count
             time_remaining = average_iteration_time * (self.total_count - current_count)
-            print(f'\r{self.bar_name} |{Alpenbar.block * n_blocks}{Alpenbar.space * (self.bar_size - n_blocks)}| '
-                  f'{current_count}/{self.total_count}    '
-                  f'ETA: {format_time(time_remaining)}    ' 
-                  f'Iteration Rate: {1 / average_iteration_time:.0f}    ',
-                  f'Time Elapsed: {format_time(time_elapsed)}', end='')
+            if self.tk_mode:
+                print(f'\r{self.bar_name} |{Alpenbar.block * n_blocks}{Alpenbar.space * (self.bar_size - n_blocks)}| '
+                      f'{current_count}/{self.total_count}    '
+                      f'ETA: {format_time(time_remaining)}    ' 
+                      f'Iteration Rate: {1 / average_iteration_time:.0f}    ',
+                      f'Time Elapsed: {format_time(time_elapsed)}', end='')
+            else:
+                print(f'\r{self.bar_name} |{Alpenbar.block * n_blocks}{Alpenbar.space * (self.bar_size - n_blocks)}| '
+                      f'{current_count}/{self.total_count}    '
+                      f'ETR: {format_time(time_remaining)} ' 
+                      f'It/s: {1 / average_iteration_time:.0f}', end='')
         else:
             print(f'\r{self.bar_name} |{Alpenbar.block * n_blocks}{Alpenbar.space * (self.bar_size - n_blocks)}| '
                   f'{current_count}/{self.total_count}', end='')
