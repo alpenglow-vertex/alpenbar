@@ -53,8 +53,8 @@ class Alpenbar:
 
 class AlpenbarIterator:
     def __init__(self, array, bar_name: str = "Alpen progress", bar_size: int = 50, enable_time: bool = True):
-        self.progress_bar = Alpenbar(len(array), bar_name=bar_name, bar_size=bar_size, enable_time=enable_time)
-        self.array = array
+        self.array = list(array)
+        self.progress_bar = Alpenbar(len(self.array), bar_name=bar_name, bar_size=bar_size, enable_time=enable_time)
         self.i = -1
 
     def __iter__(self):
