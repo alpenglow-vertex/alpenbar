@@ -1,3 +1,7 @@
+.idea/
+dist/
+*__pycache__
+
 # created by virtualenv automatically
 ../venv
 /venv/
