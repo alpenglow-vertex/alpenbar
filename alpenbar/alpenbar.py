@@ -26,6 +26,9 @@ class Alpenbar:
     def tick(self, current_count=None):
         if current_count is None:
             current_count = self.current_count
+            self.current_count += 1
+        else:
+            self.current_count = current_count
 
         n_blocks = int(current_count / self.total_count * self.bar_size)
         if self.enable_time and current_count != 0:
@@ -46,3 +49,25 @@ class Alpenbar:
         else:
             print(f'\r{self.bar_name} |{Alpenbar.block * n_blocks}{Alpenbar.space * (self.bar_size - n_blocks)}| '
                   f'{current_count}/{self.total_count}', end='')
+
+
+class AlpenbarIterator:
+    def __init__(self, array, bar_name: str = "Alpen progress", bar_size: int = 50, enable_time: bool = True):
+        self.progress_bar = Alpenbar(len(array), bar_name=bar_name, bar_size=bar_size, enable_time=enable_time)
+        self.array = array
+        self.i = -1
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        self.i += 1
+        if self.i < len(self.array):
+            self.progress_bar.tick()
+            return self.array[self.i]
+        print()
+        raise StopIteration()
+
+
+def track_progress(array, bar_name: str = "Alpen progress", bar_size: int = 50, enable_time: bool = True):
+    return AlpenbarIterator(array, bar_name=bar_name, bar_size=bar_size, enable_time=enable_time)
